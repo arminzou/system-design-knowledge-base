@@ -5,8 +5,6 @@
 A computing model where tasks are distributed between clients (requesters) and
 servers (providers of resources/services).
 
----
-
 ### **Core Components**
 
 #### Client
@@ -83,8 +81,6 @@ via APIs.
 
 ## Server Infrastructure
 
----
-
 ### **Infrastructure Components**
 
 #### Web Server
@@ -113,8 +109,6 @@ Distributed network of servers that deliver web content to users based on their
 geographic location.
 
 ## Networking & Communication
-
----
 
 ### **Network Addressing**
 
@@ -155,8 +149,6 @@ The time delay between a request being sent and the response being received,
 often measured in milliseconds.
 
 ## API Development & Management
-
----
 
 ### **API Architecture**
 
@@ -205,8 +197,6 @@ request.
 
 ## Database & Storage
 
----
-
 ### **Database Types**
 
 #### SQL Database
@@ -251,8 +241,6 @@ System for storing large binary objects, such as images, videos, or documents.
 
 ## Scalability & Performance
 
----
-
 ### **Scaling Strategies**
 
 #### Vertical Scaling
@@ -276,8 +264,6 @@ nodes.
 Temporary storage of copies of data to reduce retrieval time and server load.
 
 ## Reliability & Consistency
-
----
 
 ### **Consistency Models**
 
@@ -306,8 +292,6 @@ system components.
 ## Software Architecture & Design
 
 ### **Microservices Design Patterns**
-
----
 
 #### [API Gateway](#api-gateway)
 
@@ -347,8 +331,6 @@ A migration pattern/strategy for incrementally replacing a legacy system by grad
 functionality to new services.
 
 ### **Software Design Approaches (Design Methodologies)**
-
----
 
 #### Domain-Driven Design (DDD)
 
