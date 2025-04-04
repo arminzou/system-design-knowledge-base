@@ -415,15 +415,108 @@ system components.
 
 #### Monolithic Architecture
 
-A software design pattern where an application is built as a single, unified codebase with tightly coupled components. All modules share the same memory space and resources, with direct function calls between components.
+A software design pattern where **an application is built as a single, unified codebase** with tightly coupled components (user interface, business logic, data access).
 
-#### Service-Oriented Architecture (SOA)
+```mermaid
+flowchart TD
+    subgraph "Monolithic Application"
+        UI[User Interface Layer]
+        BL[Business Logic Layer]
+        DAL[Data Access Layer]
+        DB[(Database)]
 
-A software design pattern that structures applications as collections of coarse-grained services communicating through standardized protocols. Services represent business functions with defined interfaces but often share databases.
+        Client[Client] -->|Request| UI
+        UI -->|Process| BL
+        BL -->|Store/Retrieve| DAL
+        DAL -->|Query| DB
+    end
+
+    note[Single Deployable Unit: All components <br> are packaged and deployed together]
+    style note fill:#f9f,stroke:#333,stroke-width:1px
+```
+
+> Pros: Simplicity, easier to debug, faster initial development
+>
+> Cons: Harder to scale, can become complex and hard to maintain
 
 #### Microservices Architecture
 
-A software design pattern that decomposes applications into small, autonomous services organized around business capabilities. Each service has a specific purpose, maintains its own data, and communicates via lightweight protocols.
+A software design pattern where **an application is built as a collection of small, independent services that communicate over a network**. Each microservice focuses on a specific business function and maintains its own data.
+
+```mermaid
+flowchart TD
+Client[Client] --> API[API Gateway]
+
+    subgraph "Microservice 1: User Service"
+        US[User Service] --> UDB[(User DB)]
+    end
+
+    subgraph "Microservice 2: Order Service"
+        OS[Order Service] --> ODB[(Order DB)]
+    end
+
+    subgraph "Microservice 3: Product Service"
+        PS[Product Service] --> PDB[(Product DB)]
+    end
+
+    subgraph "Microservice 4: Payment Service"
+        PAYS[Payment Service] --> PAYDB[(Payment DB)]
+    end
+
+    API --> US
+    API --> OS
+    API --> PS
+    API --> PAYS
+
+    OS -->|Communication| PS
+    OS -->|Communication| PAYS
+
+    note[Independent Services - <br>Each with its own database <br>and deployment pipeline]
+    style note fill:#afd,stroke:#333,stroke-width:1px
+```
+
+> Pros: Independent scaling, technology flexibility, easier for team collaboration
+>
+> Cons: Complex to set up and manage, harder to test end-to-end, data consistency challenges
+
+#### Service-Oriented Architecture (SOA)
+
+A software design pattern that **focuses on building reusable services to serve multiple applications across an entire organization**. These services typically communicate through standardized interfaces or an ESB (Enterprise Service Bus), enabling different applications to use these services regardless of the underlying technologies.
+
+```mermaid
+flowchart TD
+App1[Application 1] --> ESB
+App2[Application 2] --> ESB
+App3[Application 3] --> ESB
+
+    subgraph "Enterprise Service Bus (ESB)"
+        ESB[Enterprise Service Bus]
+    end
+
+    ESB --> S1
+    ESB --> S2
+    ESB --> S3
+    ESB --> S4
+
+    subgraph "Shared Services"
+        S1[Customer Service]
+        S2[Product Catalog Service]
+        S3[Order Processing Service]
+        S4[Authentication Service]
+    end
+
+    S1 --> DB1[(Shared Database)]
+    S2 --> DB1
+    S3 --> DB1
+    S4 --> DB2[(Auth Database)]
+
+    note[Business-aligned services <br>with centralized communication <br>through Enterprise Service Bus]
+    style note fill:#ccf,stroke:#333,stroke-width:1px
+```
+
+> Pros: Reusable services, business-aligned modularity, can integrate legacy systems
+>
+> Cons: Complex to manage, centralized ESB can become a performance bottleneck and single point of failure
 
 ### **Microservices Design Patterns**
 
@@ -479,7 +572,3 @@ the design through failing tests that are later made to pass.
 
 Storing changes to application state as a sequence of events rather than just
 the current state.
-
-```
-
-```
