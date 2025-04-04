@@ -23,13 +23,19 @@ servers (providers of resources/services).
 
 #### Frontend
 
-A **web server** that serves static files, handles browser requests, and returns data to browsers.
+A **web server** that **serves staic files** (HTML, CSS, JavaScript), **routes requests** to appropriate backend servers, often **acts as the entry point** for client application.
 
-> Examples: IIS, Nginx, Apache, HAPorxy
+!!! info All frontend servers are web servers, but not all web servers that serve static files are considered frontend servers (Ex: CDN, Static File Servers).
+
+> Node.js with Express: Often used to create custom frontend servers that serve React/Angular/Vue applications
+>
+> Nginx as a frontend proxy: Configured specifically to route and cache frontend resources
 
 #### Backend
 
-A **dedicated server** that hosts server-side applications to handle client requests and communicate with databases and other services.
+A **application server** that **hosts server-side applications** that process business logic, handle data operations, and interact with databases and other services.
+
+> Examples: Application servers running Node.js, Python, Java, .NET, etc.
 
 #### Browser/Frontend App
 
@@ -205,8 +211,9 @@ flowchart TB
 
 #### Web Server
 
-Software or hardware that serves content to clients via HTTP, processing
-requests and delivering responses.
+**A specialized software** that handles HTTP requests and serves web content to clients (typically browsers). It handles incoming requests from browser, processes them, and sends back appropriate responses.
+
+> Examples: IIS, Nginx, Apache
 
 #### Reverse Proxy
 
