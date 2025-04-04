@@ -108,10 +108,6 @@ sequenceDiagram
 A deployment strategy where **all application components (presentation, logic, data) run on a single server**. All components share the same computing resources and system environment.
 
 ```mermaid
----
-config:
-  markdownAutoWrap: false
----
 flowchart LR
     subgraph "Web server (IIS/Nginx)"
         UI[User Interface] --> BL[Business Logic]
