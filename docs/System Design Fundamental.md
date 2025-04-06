@@ -23,7 +23,7 @@ servers (providers of resources/services).
 
 #### Frontend
 
-A **web server** that **serves staic files** (HTML, CSS, JavaScript), **routes requests** to appropriate backend servers, often **acts as the entry point** for client application.
+**Web servers** that **serve staic files** (HTML, CSS, JavaScript), **routes requests** to appropriate backend servers, often **acts as the entry point** for client application.
 
 !!! info All frontend servers are web servers, but not all web servers that serve static files are considered frontend servers (Ex: CDN, Static File Servers).
 
@@ -33,7 +33,7 @@ A **web server** that **serves staic files** (HTML, CSS, JavaScript), **routes r
 
 #### Backend
 
-A **application server** that **hosts server-side applications** that process business logic, handle data operations, and interact with databases and other services.
+**Application servers** that **host server-side applications** that process business logic, handle data operations, and interact with databases and other services.
 
 > Examples: Application servers running Node.js, Python, Java, .NET, etc.
 
@@ -211,29 +211,55 @@ flowchart TB
 
 #### Web Server
 
-**A specialized software** that handles HTTP requests and serves web content to clients (typically browsers). It handles incoming requests from browser, processes them, and sends back appropriate responses.
+A server with specialized software that **handles HTTP requests** from clients (typically browsers). It directly **serves static content** (HTML, CSS, JavaScript, images), **forwards requests** for dynamic content to backend servers for processing, and **returns appropriate responses** to the client.
 
-> Examples: IIS, Nginx, Apache
+!!! info Primary Function
+
+    Focus on **serving web content**, **handling HTTP protocols**, and **routing requests**
+
+> Examples: IIS, Nginx, Apache HTTP Server
 
 #### Reverse Proxy
 
-Server that sits between clients and backend servers, forwarding client requests
-to appropriate backend services.
+A server with a specialized software that sits between client devices and backend servers, **intercepting client requests** and **forwarding them to appropriate backend servers** while providing security, SSL termination, and caching.
+
+!!! info Primary Function
+
+    Focus on request **forwarding**, **content caching**, and **security**
+
+> Examples: Nginx, IIS with Application Request Routing (ARR), Apache with mod_proxy
 
 #### Load Balancer
 
-System that distributes incoming network traffic across multiple servers to
-ensure reliability and optimal resource usage.
+A server with a specialized software that **distributes incoming client requests across multiple servers** to ensure high availability, avoid traffic overload, prevent single points of failure, and enable horizontal scaling.
+
+!!! info Primary function
+
+    Focus on **traffic distribution** and **high availability**
+
+> Examples:
+> &nbsp;> Load Balancing Software: Microsoft Network Load Balancing (NLB), Nginx, HAProxy,
+> &nbsp;> Cloud-based Services: AWS Elastic Load Balancing, Azure Load Balancer
 
 #### API Gateway
 
-Service that acts as an entry point for multiple APIs, handling routing,
-authentication, and other cross-cutting concerns.
+A server with specialized software that **acts as a single entry point** for client applications to access multiple backend services and APIs. It **serves as a reverse proxy for API requests** while providing additional functionality such as request routing, authentication, and monitoring.
+
+!!! info Primary Function
+
+    Focus on **API traffic management**, **security**, and **request coordination** cross multiple services
+
+> Examples:
+> &nbsp;> Cloud-based Services: Azure API Management, Amazon API Gateway
+> &nbsp;> Software: Kong, Apigee, Tyk
 
 #### CDN (Content Delivery Network)
 
-Distributed network of servers that deliver web content to users based on their
-geographic location.
+**A distributed network of servers** that caches and delivers web content from the server closest to users, improving performance and user experience.
+
+!!! Info Distributed globally to optimize content delivery
+
+> Examples: CloudFlare, Akamai, Fastly.
 
 ## Networking & Communication
 
