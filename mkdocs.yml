@@ -68,3 +68,8 @@ nav:
 # Plugins
 plugins:
     - search
+    - minify
+
+# Extra CSS
+extra_css:
+    - stylesheets/extra.css
