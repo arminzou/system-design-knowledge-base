@@ -1,0 +1,70 @@
+# Project information
+site_name: System Design Documentation
+site_description: Documentation for system design fundamentals and concepts
+site_author: Armin Zou
+
+# Repository
+repo_name: arminzou/system-design-knowledge-base
+repo_url: https://github.com/yourusername/your-repo
+
+# Theme configuration
+theme:
+    name: material
+    features:
+        - navigation.tabs
+        - navigation.sections
+        - navigation.top
+        - search.suggest
+        - search.highlight
+        - content.code.copy
+        - header.autohide
+
+    # Font configuration
+    font:
+        text: IBM Plex Sans
+        code: IBM Plex Mono
+
+    # Enable the color palette toggle
+    palette:
+        - scheme: default
+          primary: indigo
+          accent: indigo
+          toggle:
+              icon: material/brightness-7
+              name: Switch to dark mode
+        - scheme: slate
+          primary: indigo
+          accent: indigo
+          toggle:
+              icon: material/brightness-4
+              name: Switch to light mode
+
+# Extensions
+markdown_extensions:
+    - admonition
+    - attr_list
+    - def_list
+    - footnotes
+    - md_in_html
+    - pymdownx.details
+    - pymdownx.highlight
+    - pymdownx.superfences:
+          custom_fences:
+              - name: mermaid
+                class: mermaid
+                format: !!python/name:pymdownx.superfences.fence_code_format
+    - pymdownx.tasklist:
+          custom_checkbox: true
+    - tables
+    - toc:
+          permalink: true
+
+# Navigation structure
+nav:
+    - Home: index.md
+    - System Design:
+          - "System Design Fundamental.md"
+
+# Plugins
+plugins:
+    - search

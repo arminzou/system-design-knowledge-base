@@ -213,7 +213,7 @@ flowchart TB
 
 A server with specialized software that **handles HTTP requests** from clients (typically browsers). It directly **serves static content** (HTML, CSS, JavaScript, images), **forwards requests** for dynamic content to backend servers for processing, and **returns appropriate responses** to the client.
 
-!!! info Primary Function
+!!! info "Primary Function"
 
     Focus on **serving web content**, **handling HTTP protocols**, and **routing requests**
 
@@ -223,7 +223,7 @@ A server with specialized software that **handles HTTP requests** from clients (
 
 A server with a specialized software that sits between client devices and backend servers, **intercepting client requests** and **forwarding them to appropriate backend servers** while providing security, SSL termination, and caching.
 
-!!! info Primary Function
+!!! info "Primary Function"
 
     Focus on request **forwarding**, **content caching**, and **security**
 
@@ -233,7 +233,7 @@ A server with a specialized software that sits between client devices and backen
 
 A server with a specialized software that **distributes incoming client requests across multiple servers** to ensure high availability, avoid traffic overload, prevent single points of failure, and enable horizontal scaling.
 
-!!! info Primary function
+!!! info "Primary Function"
 
     Focus on **traffic distribution** and **high availability**
 
@@ -245,7 +245,7 @@ A server with a specialized software that **distributes incoming client requests
 
 A server with specialized software that **acts as a single entry point** for client applications to access multiple backend services and APIs. It **serves as a reverse proxy for API requests** while providing additional functionality such as request routing, authentication, and monitoring.
 
-!!! info Primary Function
+!!! info "Primary Function"
 
     Focus on **API traffic management**, **security**, and **request coordination** cross multiple services
 
@@ -257,7 +257,9 @@ A server with specialized software that **acts as a single entry point** for cli
 
 **A distributed network of servers** that caches and delivers web content from the server closest to users, improving performance and user experience.
 
-!!! Info Distributed globally to optimize content delivery
+!!! Note
+
+    Distributed globally to optimize content delivery
 
 > Examples: CloudFlare, Akamai, Fastly.
 
