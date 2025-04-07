@@ -68,10 +68,14 @@ nav:
     - System Design:
           - "System Design Fundamental.md"
 
+copyright: |
+    &copy; 2025 <a href="https://github.com/arminzou"  target="_blank" rel="noopener">Armin Zou</a>
+
 # Plugins
 plugins:
     - search
-    - optimize
+    - minify:
+          minify_html: true
 
 # Extra CSS
 extra_css:
