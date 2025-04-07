@@ -41,7 +41,7 @@ servers (providers of resources/services).
 
 !!! example "Examples"
 
-    Application servers running Node.js, Python, Java, .NET, etc.
+    - Application servers running Node.js, Python, Java, .NET, etc.
 
 #### Browser/Frontend App
 
@@ -58,7 +58,7 @@ A **client-side application** running on the user's device that **provides the i
 
 !!! example "Examples"
 
-    Applications built with ASP.NET Core, Django, Node.js
+    - Applications built with ASP.NET Core, Django, Node.js
 
 ### Application Types
 
@@ -226,27 +226,32 @@ A **client-side application** running on the user's device that **provides the i
 A server with specialized software that **handles HTTP requests** from clients (typically browsers). It directly **serves static content** (HTML, CSS, JavaScript, images), **forwards requests** for dynamic content to backend servers for processing, and **returns appropriate responses** to the client.
 
 !!! info "Primary Function"
-Focus on **serving web content**, **handling HTTP protocols**, and **routing requests**
+
+    - Focus on **serving web content**, **handling HTTP protocols**, and **routing requests**
 
 !!! example "Examples"
-IIS, Nginx, Apache HTTP Server
+
+    - IIS, Nginx, Apache HTTP Server
 
 #### Reverse Proxy
 
 A server with a specialized software that sits between client devices and backend servers, **intercepting client requests** and **forwarding them to appropriate backend servers** while providing security, SSL termination, and caching.
 
 !!! info "Primary Function"
-Focus on request **forwarding**, **content caching**, and **security**
+
+    - Focus on request **forwarding**, **content caching**, and **security**
 
 !!! example "Examples"
-Nginx, IIS with Application Request Routing (ARR), Apache with mod_proxy
+
+    - Nginx, IIS with Application Request Routing (ARR), Apache with mod_proxy
 
 #### Load Balancer
 
 A server with a specialized software that **distributes incoming client requests across multiple servers** to ensure high availability, avoid traffic overload, prevent single points of failure, and enable horizontal scaling.
 
 !!! info "Primary Function"
-Focus on **traffic distribution** and **high availability**
+
+    - Focus on **traffic distribution** and **high availability**
 
 !!! example "Examples"
 
@@ -258,7 +263,8 @@ Focus on **traffic distribution** and **high availability**
 A server with specialized software that **acts as a single entry point** for client applications to access multiple backend services and APIs. It **serves as a reverse proxy for API requests** while providing additional functionality such as request routing, authentication, and monitoring.
 
 !!! info "Primary Function"
-Focus on **API traffic management**, **security**, and **request coordination** across multiple services
+
+    - Focus on **API traffic management**, **security**, and **request coordination** across multiple services
 
 !!! example "Examples"
 
@@ -544,7 +550,8 @@ in different database nodes.
 Data structure technique to improve the speed of data retrieval operations.
 
 !!! warning "Tradeoffs"
-Indexes speed up reads but slow down writes and require additional storage
+
+    - Indexes speed up reads but slow down writes and require additional storage
 
 !!! tip "Best Practices"
 
