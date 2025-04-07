@@ -11,6 +11,6 @@
 # Built Visual Studio Code Extensions
 *.vsix
 
-.github/
+.github/custom_instructions
 
 repomix*
