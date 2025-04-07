@@ -14,6 +14,7 @@ theme:
         - navigation.tabs
         - navigation.sections
         - navigation.top
+        - navigation.footer
         - search.suggest
         - search.highlight
         - content.code.copy
@@ -70,7 +71,7 @@ nav:
 # Plugins
 plugins:
     - search
-    - minify
+    - optimize
 
 # Extra CSS
 extra_css:
