@@ -1,3 +1,8 @@
+---
+title: System Design Fundamentals
+description: This document covers fundamental concepts of System Design
+---
+
 # System Design Fundamentals
 
 ## Client-Server Architecture
@@ -9,7 +14,7 @@ servers (providers of resources/services).
 
 #### Client
 
-**End-user devices or applications** that communicates with **consumer applications** to make **requests** to servers.
+**End-user (client) devices or applications** that communicates with **consumer applications** to make **requests** to servers.
 
 !!! example "Examples"
 
@@ -28,7 +33,7 @@ servers (providers of resources/services).
 
 !!! info "Important Note"
 
-    All frontend servers are web servers, but not all web servers that serve static files are considered frontend servers (Ex: CDN, Static File Servers).
+    All frontend servers are [web servers](#web-server), but not all web servers that serve static files are considered frontend servers (Ex: CDN, Static File Servers).
 
 !!! example "Examples"
 
@@ -45,12 +50,14 @@ servers (providers of resources/services).
 
 #### Browser/Frontend App
 
-A **client-side application** running on the user's device that **provides the interface users interact** with directly in their browser.
+A **client-side application** (1) running on the user's device that **provides the interface users interact** with directly in their browser.
+{ .annotate }
+
+1. client-side application: A collection of static files (HTML, CSS, and JavaScript)
 
 !!! example "Examples"
 
-    - **Client-side application**: A collection of static files (HTML, CSS, and JavaScript)
-    - **Frameworks**: Web apps developed using frontend frameworks like React, Vue.js, Angular
+    - **Examples**: Web apps developed using frontend frameworks like React, Vue.js, Angular
 
 #### Backend App
 
@@ -223,7 +230,7 @@ A **client-side application** running on the user's device that **provides the i
 
 #### Web Server
 
-A server with specialized software that **handles HTTP requests** from clients (typically browsers). It directly **serves static content** (HTML, CSS, JavaScript, images), **forwards requests** for dynamic content to backend servers for processing, and **returns appropriate responses** to the client.
+A server with a specialized software that **handles HTTP requests** from clients (typically browsers). It directly **serves static content** (HTML, CSS, JavaScript, images), **forwards requests** for dynamic content to backend servers for processing, and **returns appropriate responses** to the client.
 
 !!! info "Primary Function"
 
@@ -260,7 +267,7 @@ A server with a specialized software that **distributes incoming client requests
 
 #### API Gateway
 
-A server with specialized software that **acts as a single entry point** for client applications to access multiple backend services and APIs. It **serves as a reverse proxy for API requests** while providing additional functionality such as request routing, authentication, and monitoring.
+A server with a specialized software that **acts as a single entry point** for client applications to access multiple backend services and APIs. It **serves as a reverse proxy for API requests** while providing additional functionality such as request routing, authentication, and monitoring.
 
 !!! info "Primary Function"
 

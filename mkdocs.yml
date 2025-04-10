@@ -1,11 +1,13 @@
 # Project information
-site_name: System Design Documentation
-site_description: Documentation for system design fundamentals and concepts
+site_name: Armin's Engineering Notes
+site_description:
+    A personal collection of software engineering knowledge, learning notes, and
+    resources gathered throughout my journey as a developer
 site_author: Armin Zou
 
 # Repository
-repo_name: arminzou/system-design-knowledge-base
-repo_url: https://github.com/arminzou/system-design-knowledge-base
+repo_name: arminzou/software-engineering-knowledge-base
+repo_url: https://arminzou.github.io/software-engineering-knowledge-base/
 
 # Theme configuration
 theme:
@@ -19,6 +21,8 @@ theme:
         - search.highlight
         - content.code.copy
         - header.autohide
+    icon:
+        annotation: material/plus-circle
 
     # Font configuration
     font:
@@ -67,6 +71,22 @@ nav:
     - Home: index.md
     - System Design:
           - "System Design Fundamental.md"
+    - Backend Development:
+          - "Backend Development.md"
+    - Data Structures & Algorithms:
+          - "Data Structures & Algorithms.md"
+    - Frontend Development:
+          - "Frontend Development.md"
+    # - Programming Languages:
+    #       - "Programming Languages.md"
+    # - DevOps & Infrastructure:
+    #       - "DevOps & Infrastructure.md"
+    # - Best Practices & Patterns:
+    #       - "Best Practices & Patterns.md"
+    # - Tools & Technologies:
+    #       - "Tools & Technologies.md"
+    # - Career Development:
+    #       - "Career Development.md"
 
 copyright: |
     &copy; 2025 <a href="https://github.com/arminzou"  target="_blank" rel="noopener">Armin Zou</a>
