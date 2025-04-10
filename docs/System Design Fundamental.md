@@ -123,32 +123,16 @@ A **client-side application** (1) running on the user's device that **provides t
     **Web applications** that use modern web technologies to **deliver app-like experiences** to users.
 
     ```mermaid
-    flowchart TD
-        subgraph "PWA Architecture"
-            Client[Client/Browser] -->|HTTP/HTTPS| ServiceWorker[Service Worker]
-            ServiceWorker -->|Cache| CacheStorage[Cache Storage]
-            ServiceWorker -->|Background Sync| BackgroundSync[Background Sync]
-            ServiceWorker -->|Push Notifications| PushAPI[Push API]
+    flowchart LR
+        Client[Client] -->|HTTP/HTTPS| SW[Service Worker]
+        SW -->|Cache| CS[Cache Storage]
+        SW -->|Sync| BS[Background Sync]
+        SW -->|Push| PN[Push API]
 
-            Client -->|Install| Manifest[Web App Manifest]
-            Manifest -->|Metadata| App[PWA Application]
-            App -->|Offline Support| ServiceWorker
-            App -->|Responsive UI| Client
-        end
-
-        subgraph "Key Features"
-            Offline[Offline Support]
-            Install[Installable]
-            Push[Push Notifications]
-            Sync[Background Sync]
-            Responsive[Responsive Design]
-        end
-
-        ServiceWorker -.->|Enables| Offline
-        Manifest -.->|Enables| Install
-        PushAPI -.->|Enables| Push
-        BackgroundSync -.->|Enables| Sync
-        App -.->|Provides| Responsive
+        Client -->|Install| WM[Web Manifest]
+        WM -->|Metadata| App[PWA]
+        App -->|Offline| SW
+        App -->|Responsive| Client
     ```
 
     !!! note "Key Features"
