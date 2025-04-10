@@ -17,4 +17,4 @@ Stay tuned as I continue to build out this knowledge base with practical example
 
 ---
 
-_Last updated: {date}_
+\_Last updated: April 2025
