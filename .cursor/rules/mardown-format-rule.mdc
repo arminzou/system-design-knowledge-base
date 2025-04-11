@@ -1,0 +1,130 @@
+---
+description: 
+globs: *.md
+alwaysApply: false
+---
+# Material for MkDocs: Admonition Formatting Guide
+
+## Basic Syntax
+
+```
+!!! type "Optional Title"
+
+    Content of the admonition (indented by 4 spaces)
+```
+
+**IMPORTANT:** Note the empty line after the title line before the content. This line break is required.
+
+## Collapsible Admonitions
+
+```
+??? type "Optional Title"
+
+    Content of the collapsible admonition (indented by 4 spaces)
+```
+
+Expanded by default:
+
+```
+???+ type "Optional Title"
+
+    Content of the expanded collapsible admonition (indented by 4 spaces)
+```
+
+## Supported Admonition Types
+
+-   `note` - Default blue note
+-   `abstract` - Summary/abstract/TL;DR
+-   `info` - Information/reference
+-   `tip` - Tips and helpful advice
+-   `success` - Success messages
+-   `question` - Questions or FAQs
+-   `warning` - Warning messages
+-   `failure` - Failure messages
+-   `danger` - Danger/critical messages
+-   `bug` - Bug notices
+-   `example` - Example blocks
+-   `quote` - Quotes or citations
+
+## Examples
+
+### Basic Note
+```
+!!! note
+
+    This is a note.
+```
+
+### List of items
+```
+!!! note
+
+    -   This is first item
+    -   This is second item
+```
+
+### Note with Custom Title
+```
+!!! note "Custom Title"
+
+    This is a note with a custom title.
+```
+
+### Note without Title
+```
+!!! note ""
+
+    This is a note without a title.
+```
+
+### Collapsible Warning
+```
+??? warning
+
+    This is a collapsible warning.
+```
+
+### Expanded Collapsible Success
+```
+???+ success
+
+    This is an expanded collapsible success message.
+```
+
+## Nested Admonitions
+
+```
+!!! note "Outer Note"
+
+    This is an outer note.
+    
+    !!! tip "Inner Tip"
+
+        This is a nested tip inside the note.
+```
+
+## Inline Admonitions
+
+Right-aligned:
+```
+!!! info inline end "Right-aligned"
+
+    This admonition is aligned to the right.
+```
+
+Left-aligned:
+```
+!!! info inline "Left-aligned"
+
+    This admonition is aligned to the left.
+```
+
+## Tips
+
+1.  Content must be indented by 4 spaces
+2.  Added an empty line after each admonition declaration is **REQUIRED** - this is the most common formatting mistake
+3.  For collapsible blocks, use `???` instead of `!!!`
+4.  For expanded collapsible blocks, use `???+`
+5.  Inline blocks must be placed before content they should appear next to
+6.  All content after the empty line must be indented with 4 spaces to be part of the admonition
+
