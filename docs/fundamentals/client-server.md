@@ -5,6 +5,9 @@ description: This document covers fundamental concepts of Client-Server Architec
 
 # Client-Server Architecture
 
+A computing model where tasks are distributed between clients (requesters) and
+servers (providers of resources/services).
+
 ## Core Components
 
 ### Client
@@ -35,7 +38,7 @@ description: This document covers fundamental concepts of Client-Server Architec
 
 !!! info "Important Note"
 
-    All frontend servers are [web servers](#web-server), but not all web servers that serve static files are considered frontend servers (Ex: CDN, Static File Servers).
+    All frontend servers are [web servers](../fundamentals/server-infrastructure.md#web-server), but not all web servers that serve static files are considered frontend servers (Ex: CDN, Static File Servers).
 
 !!! example "Examples"
 

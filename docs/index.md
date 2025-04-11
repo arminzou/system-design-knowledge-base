@@ -129,3 +129,4 @@ This documentation is built with:
 -   [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/) - A modern documentation site generator
 -   [Mermaid](https://mermaid-js.github.io/) - For creating diagrams and flowcharts
 -   [GitHub Pages](https://pages.github.com/) - For hosting the documentation
+
