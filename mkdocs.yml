@@ -70,13 +70,36 @@ markdown_extensions:
 nav:
     - Home: index.md
     - System Design:
-          - "System Design Fundamental.md"
+          # - Overview: README.md
+          - Fundamentals:
+                - Client-Server Architecture: fundamentals/client-server.md
+                - Server-Infrastructure: fundamentals/server-infrastructure.md
+                - Networking & Communication: fundamentals/networking.md
+                - API Development & Management: fundamentals/api.md
+                - Database & Storage: fundamentals/database.md
+                - Scalability & Performance: fundamentals/scalability.md
+                - Reliability & Consistency: fundamentals/reliability.md
+                - Software Architecture & Design: fundamentals/software-architecture.md
+                - Security: fundamentals/security.md
+          # - Patterns:
+          #       - Microservices Patterns: patterns/microservices.md
+          #       - Caching Strategies: patterns/caching.md
+          #       - Message Queues & Event-Driven: patterns/messaging.md
+          #       - Security Patterns: patterns/security.md
+          # - Case Studies:
+          #       - Social Media Platform: case-studies/social-media.md
+          #       - E-commerce System: case-studies/e-commerce.md
+          #       - Video Streaming Platform: case-studies/streaming.md
+          # - Tools:
+          #       - Cloud Services: tools/cloud.md
+          #       - Monitoring & Observability: tools/monitoring.md
+          #       - Deployment & Orchestration: tools/deployment.md
     - Backend Development:
-          - "Backend Development.md"
+          - "backend/Backend Development.md"
     - Data Structures & Algorithms:
-          - "Data Structures & Algorithms.md"
+          - "data-structures-and-algorithms/Data Structures & Algorithms.md"
     - Frontend Development:
-          - "Frontend Development.md"
+          - "frontend/Frontend Development.md"
     # - Programming Languages:
     #       - "Programming Languages.md"
     # - DevOps & Infrastructure:
