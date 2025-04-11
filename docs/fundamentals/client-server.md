@@ -30,6 +30,12 @@ servers (providers of resources/services).
     -   Centralized management
     -   Secure access control
 
+!!! note annotate
+
+    Servers can be deployed in various ways depending on the requirements.(1)
+
+1. See [Server Infrastructure](../fundamentals/server-infrastructure.md#server-deployment-models) for information about different deployment models (physical, virtual, containerized, cloud-based)
+
 ## Application Layers
 
 ### Frontend

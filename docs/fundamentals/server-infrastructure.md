@@ -79,40 +79,118 @@ Traditional deployment using dedicated hardware.
 
 !!! info "Characteristics"
 
-    - Full control over hardware
-    - Higher upfront costs
-    - Limited scalability
-    - Requires physical maintenance
+    - Full control over hardware and infrastructure
+    - Higher upfront costs and maintenance overhead
+    - Fixed capacity with manual scaling
+    - Requires physical maintenance and datacenter management
 
-### Virtual Machines
+### Virtual Machines (VMs)
 
-Software-based emulation of physical computers.
+Indenpendent computer environments created using software (1) on a single physical machine, allowing multiple "virtual computers" to run separately while sharing the same hardware resources. Each VM has its own operating system and appears to applications as a standalone computer.
+{ .annotate }
+
+1. **Hypervisor**: A virtualization software
 
 !!! info "Characteristics"
 
-    - Resource isolation
-    - Multiple OS instances
-    - Better resource utilization
-    - Easier management
+    - Resource isolation through hypervisors
+    - Support for multiple operating systems
+    - Better resource utilization than physical servers
+    - More flexible scaling and provisioning
 
 ### Containers
 
-Lightweight, standalone executable packages of software.
+Lightweight, standalone executable packages including application code and dependencies.
 
 !!! info "Characteristics"
 
-    - Process isolation
-    - Consistent environments
-    - Fast deployment
-    - Resource efficiency
+    - Process-level isolation (shares OS kernel)
+    - Consistent environments across development and production
+    - Fast startup and deployment times
+    - Highly efficient resource utilization
+    - Orchestration through tools like Kubernetes
 
-### Serverless
+### Cloud-based Services
 
-Cloud computing execution model where the cloud provider manages the server infrastructure.
+Infrastructure hosted and managed by cloud service providers with various abstraction levels (Cloud computing models).
 
 !!! info "Characteristics"
 
-    - No server management
-    - Pay-per-use pricing
-    - Automatic scaling
-    - Event-driven execution
+    - Remote infrastructure management
+    - Pay-as-you-go or subscription-based pricing
+    - Elastic scaling capabilities
+    - Managed services reducing operational overhead
+    - Global availability and region-specific deployments
+    - Shared responsibility security model
+
+#### IaaS (Infrastructure as a Service)
+
+A cloud computing model where cloud provider offers virtual infrastucture resources (servers, VMs, storage, networking) over the internet on a pay-as-you-go basis.
+
+!!! info "Characteristics"
+
+    - You manage the operating systems, middleware, and applications
+    - The provider manages the hardware infrastructure
+    - Requires the most management from your side
+    - Virtualized computing resources
+    - Self-service provisioning
+
+!!! example "Examples"
+
+    - AWS EC2
+    - Azure Virtual Machines
+    - Google Compute Engine
+
+#### PaaS (Platform as a Service)
+
+A cloud computing model that provides a platform enviroment allowing customers to develop, run, and manage applications.
+
+!!! info "Characteristics"
+
+    - You focus on application development
+    - The provider manages the runtime, operating system, and underlying infrastructure
+    - Simplifies development and deployment
+    - Built-in scalability and high availability
+    - Reduced operational management
+
+!!! example "Examples"
+
+    - Azure App Service
+    - Google App Engine
+    - Heroku
+
+#### Serverless/FaaS (Function as a Service)
+
+A cloud computing model that allows developers to build, deploy, and execute individual functions (or microservices) without managing the underlying infrastructure.
+
+!!! info "Characteristics"
+
+    - You pay only for execution time (not idle capacity)
+    - The provider fully manages starting and stopping virtual machines (No server management required)
+    - Automatic scaling based on demand
+    - Event-driven architecture
+    - Stateless execution model
+
+!!! example "Examples"
+
+    - AWS Lambda
+    - Azure Functions
+    - Google Cloud Functions
+    - Cloudflare Workers
+
+#### SaaS (Software as a Service)
+
+A computing model where cloud providers host, manage, and deliver applications to customers over the internet.
+
+!!! info "Characteristics"
+
+    - Complete application delivered as a service
+    - No local installation or maintenance required
+    - Typically subscription-based pricing
+    - Provider manages everything (infrastructure, platform, application)
+
+!!! example "Examples"
+
+    - Microsoft 365
+    - Salesforce
+    - Google Workspace
