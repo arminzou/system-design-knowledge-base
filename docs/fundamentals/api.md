@@ -5,9 +5,51 @@ description: This document covers fundamental concepts of API Development & Mana
 
 # API Development & Management
 
+## Application Protocols
+
+### HTTP/HTTPS
+
+Protocols for transmitting web content; HTTPS adds encryption for secure data transfer.
+
+!!! info "Key Concepts"
+
+    - **Request/Response Model**
+    - **Headers and Body**
+    - **Status Codes** (2xx, 3xx, 4xx, 5xx)
+    - **CORS and Security**
+    - **Caching Mechanisms**
+
+!!! example "Common Methods"
+
+    - **GET**: Retrieve data
+    - **POST**: Submit data
+    - **PUT**: Update existing resources
+    - **DELETE**: Remove resources
+
+#### HTTP Versions
+
+Evolution and key improvements:
+
+!!! info "Version Features"
+
+    - **HTTP/1.1**: Basic persistent connections
+    - **HTTP/2**: Multiplexing, Server Push
+    - **HTTP/3**: QUIC protocol, improved performance
+
+### WebSockets
+
+Communication protocol that provides full-duplex communication channels over a single TCP connection.
+
+!!! tip "When to Use"
+
+    - Ideal for real-time applications like chat, live notifications, and collaborative tools
+
+
 ## API Architecture
 
-### REST API
+API Architecture defines the overall design approach for building and exposing APIs. Different architectural styles offer various tradeoffs in terms of complexity, performance, and flexibility.
+
+### REST (Representational State Transfer)
 
 Architectural style for designing networked applications using HTTP methods and
 stateless operations.
@@ -18,6 +60,34 @@ stateless operations.
     - Resource-based
     - Uses standard HTTP methods
     - Representation-oriented
+
+!!! info "When to Use"
+
+    - Public APIs with diverse clients
+    - Mobile applications
+    - Web applications
+    - When HTTP caching is beneficial
+    - For systems requiring simple, standards-based integration
+
+### SOAP (Simple Object Access Protocol)
+
+A protocol specification for exchanging structured information in web services using XML. It defines a standardized format for messages and a set of rules for communication between applications.
+
+!!! info "Characteristics"
+
+    - XML-based messaging format
+    - Platform and language independent
+    - Strong typing and validation
+    - Supports multiple transport protocols (HTTP, SMTP, TCP)
+    - Built-in error handling with SOAP Fault
+    - Uses WSDL (Web Services Description Language) for service definition
+
+!!! info "When to Use"
+
+    - Enterprise integration requiring formal contracts, such as enterprise web services
+    - Financial transactions and healthcare information exchange requiring security
+    - Government systems integration and regulated industries
+    - Legacy system integration with strict reliability requirements
 
 ### GraphQL
 
@@ -31,6 +101,20 @@ data they need.
     - Strongly typed schema
     - Reduces over-fetching and under-fetching of data
 
+!!! info "When to Use"
+
+    - Applications with complex data requirements
+    - Mobile apps needing to minimize bandwidth usage
+    - APIs serving multiple client types with different needs
+    - Rapidly evolving frontends with changing data requirements
+
+!!! warning "Considerations"
+
+    - More complex server implementation
+    - Potential for performance issues with nested queries
+    - Caching is more challenging than REST
+    - Requires specialized tooling and client libraries
+
 ### gRPC
 
 High-performance, open-source universal RPC framework using Protocol Buffers.
@@ -42,7 +126,49 @@ High-performance, open-source universal RPC framework using Protocol Buffers.
     - Strongly typed contracts
     - Supports streaming: unary, server, client, and bidirectional
 
+!!! info "When to Use"
+
+    - Microservice communication requiring high performance
+    - Real-time communication with bidirectional streaming
+    - Polyglot environments (services written in different languages)
+    - IoT systems with limited bandwidth
+    - Low-latency, high-throughput communication
+
+!!! warning "Limitations"
+
+    - Limited browser support
+    - Less human-readable than JSON
+    - Requires Protocol Buffer compilation
+    - Less suitable for public APIs
+
+## API Implementation Considerations
+
+### API Versioning
+
+Strategies for evolving APIs while maintaining backward compatibility.
+
+!!! example "Common Approaches"
+
+    - **URL path versioning**: `/api/v1/resources`
+    - **Query parameter**: `/api/resources?version=1`
+    - **Header-based**: `Accept: application/vnd.company.v1+json`
+    - **Content negotiation**: `Accept: application/json;version=1`
+
+### API Documentation
+
+Tools and formats for documenting APIs to improve developer experience.
+
+!!! example "Standards & Tools"
+
+    - **OpenAPI/Swagger**: REST API specification
+    - **RAML**: RESTful API Modeling Language
+    - **API Blueprint**: Markdown-based documentation
+    - **GraphQL Schema**: Self-documenting type system
+    - **WSDL**: Web Services Description Language for SOAP
+
 ## API Communication Mechanisms
+
+API Communication Mechanisms define how clients and servers exchange information, covering both request-response patterns and event-driven approaches.
 
 ### Polling
 
@@ -62,14 +188,29 @@ Client makes a request to the server, and the server holds the connection open u
 
 ### Webhooks
 
-HTTP callbacks that deliver data to other applications in real-time when
-specific events occur.
+Event-driven pattern where HTTP callbacks deliver data to other applications in real-time when specific events occur.
+
+!!! info "Characteristics"
+
+    - Push-based notification mechanism
+    - Event-driven communication
+    - HTTP POST requests with payload
+    - Requires endpoint registration
+    - Typically uses JSON or XML for payloads
+
+!!! info "When to Use"
+
+    - Real-time notifications
+    - Integration with third-party services
+    - Event-driven architectures
+    - Systems requiring asynchronous processing
 
 !!! example "Common Use Cases"
 
     - Payment processing notifications
-    - CI/CD pipeline events
-    - CRM updates
+    - Source control commit triggers
+    - CRM data change events
+    - IoT device state changes
 
 ### Circuit Breaker
 
