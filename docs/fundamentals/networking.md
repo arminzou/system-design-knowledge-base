@@ -488,102 +488,332 @@ UDP sockets have a simplified state model compared to TCP:
         - Each message arrives independently, with clear start and end points
         - No need to add extra markers - the packaging itself separates messages
 
-### HTTP/HTTPS
-
-Protocols for transmitting web content; HTTPS adds encryption for secure data transfer.
-
-!!! info "Key Concepts"
-
-    - **Request/Response Model**
-    - **Headers and Body**
-    - **Status Codes** (2xx, 3xx, 4xx, 5xx)
-    - **CORS and Security**
-    - **Caching Mechanisms**
-
-!!! example "Common Methods"
-
-    - **GET**: Retrieve data
-    - **POST**: Submit data
-    - **PUT**: Update existing resources
-    - **DELETE**: Remove resources
-
-#### HTTP Versions
-
-Evolution and key improvements:
-
-!!! info "Version Features"
-
-    - **HTTP/1.1**: Basic persistent connections
-    - **HTTP/2**: Multiplexing, Server Push
-    - **HTTP/3**: QUIC protocol, improved performance
-
-### WebSockets
-
-Communication protocol that provides full-duplex communication channels over a single TCP connection.
-
-!!! tip "When to Use"
-
-    - Ideal for real-time applications like chat, live notifications, and collaborative tools
-
-### API Protocols
-
-#### REST
-
-#### GraphQL
-
-#### gRPC
-
-### TLS/SSL
-
-Cryptographic protocols that provide secure communication over a computer network, commonly used in HTTPS.
-
-!!! warning "Security Best Practice"
-
-    - Always use TLS 1.2 or higher; older versions have known vulnerabilities
-
 ## Network Services & Infrastructure
 
-### DHCP
+### DHCP (Dynamic Host Configuration Protocol)
+
+A network management protocol that automatically assigns IP addresses and other network configuration parameters to devices on a network.
 
 #### Automatic IP configuration
 
+DHCP enables devices to obtain network configuration automatically without manual setup, including IP address, subnet mask, default gateway, and DNS server information.
+
+!!! info "DHCP Benefits"
+
+    - Eliminates manual configuration errors
+    - Facilitates device mobility across networks
+    - Centralizes IP address management
+    - Prevents IP address conflicts through centralized allocation
+
+!!! note "DHCP Alternatives"
+
+    - **Static IP assignment**: Manually configuring each device (common for servers)
+    - **Link-local addressing**: When DHCP fails, devices can self-assign addresses (169.254.x.x in IPv4)
+    - **SLAAC**: Stateless Address Autoconfiguration in IPv6 networks
+
 #### Lease process
+
+The DHCP lease process involves a four-step message exchange between client and server to obtain network configuration parameters for a specific time period.
+
+```mermaid
+sequenceDiagram
+    participant Client
+    participant Server
+    
+    Note over Client,Server: DHCP Discovery Process
+    Client->>Server: DHCPDISCOVER (broadcast)
+    Note right of Client: "Who can give me an IP address?"
+    Server->>Client: DHCPOFFER (unicast)
+    Note left of Server: "I can offer you 192.168.1.100"
+    Client->>Server: DHCPREQUEST (broadcast)
+    Note right of Client: "I accept the offer of 192.168.1.100"
+    Server->>Client: DHCPACK (unicast)
+    Note left of Server: "Confirmed! Here's your configuration"
+```
+
+!!! example "DHCP Transaction"
+
+    1. **DHCPDISCOVER**: Client broadcasts to find available DHCP servers
+    2. **DHCPOFFER**: Server offers an IP address and configuration
+    3. **DHCPREQUEST**: Client requests the offered address
+    4. **DHCPACK**: Server acknowledges and finalizes the lease
+
+!!! info "Lease Renewal"
+
+    - IP addresses are leased for a specified time period (often 24 hours)
+    - Client attempts to renew at 50% of lease time (T1)
+    - If renewal fails, client tries to rebind at 87.5% of lease time (T2)
+    - If rebinding fails, client must restart the DHCP discovery process
 
 ### NAT (Network Address Translation)
 
+A method that allows multiple devices on a private network to connect to the internet using a single public IP address.
+
 #### How private networks connect to the internet
+
+NAT maps private IP addresses to a public IP address by modifying network address information in packet headers.
+
+!!! info "NAT Operation"
+
+    1. **Outbound Traffic**: 
+       - Device sends packet from private IP (e.g., 192.168.1.5:3333)
+       - NAT router replaces source address with public IP (e.g., 203.0.113.5:5555)
+       - NAT creates a translation table entry mapping the connection
+       - Modified packet is forwarded to the internet
+
+    2. **Inbound Traffic**:
+       - Response comes back to public IP (203.0.113.5:5555)
+       - NAT router looks up mapping in translation table
+       - Destination address is changed back to private IP (192.168.1.5:3333)
+       - Packet is forwarded to the internal device
+
+!!! note "NAT Types"
+
+    - **Source NAT (SNAT)**: Modifies source address in outgoing packets (most common)
+    - **Destination NAT (DNAT)**: Modifies destination address in incoming packets (for port forwarding)
+    - **Port Address Translation (PAT)**: Uses different ports to distinguish connections (also called NAPT)
 
 #### NAT types and challenges
 
+Different NAT implementations vary in restrictiveness, affecting connectivity for certain applications.
+
+!!! note "NAT Classifications"
+
+    - **Full-cone NAT**: Most permissive - any external host can send to an internal client once a connection is established
+    - **Address-restricted cone**: Only allows incoming traffic from IPs that the internal host has previously sent traffic to
+    - **Port-restricted cone**: Only allows incoming traffic from specific IP:port combinations that the internal host has communicated with
+    - **Symmetric NAT**: Most restrictive - uses different external ports for each destination, challenging for peer-to-peer applications
+
+!!! warning "NAT Traversal Challenges"
+
+    - **Peer-to-peer (P2P) connections**: Difficult when both peers are behind NAT
+    - **Server-client model disruption**: External hosts can't initiate connections to NAT-hidden services
+    - **Protocol incompatibility**: Some protocols embed IP addresses in payload (e.g., FTP, SIP)
+    - **IPv6 transition**: NAT was a short-term solution for IPv4 exhaustion
+
+!!! tip "NAT Traversal Techniques"
+
+    - **STUN (Session Traversal Utilities for NAT)**: Helps discover NAT type and external IP/port
+    - **TURN (Traversal Using Relays around NAT)**: Uses relay server for restrictive NATs
+    - **ICE (Interactive Connectivity Establishment)**: Framework combining STUN, TURN, and direct connectivity
+    - **UPnP/NAT-PMP**: Protocols allowing applications to configure port forwarding automatically
+
 ### Routing
+
+The process of selecting paths in a network along which to send network traffic.
 
 #### Routing tables and protocols
 
+**Routing tables** contain information about network destinations and how to reach them, while **routing protocols** are the methods by which routers share information to build these tables.
+
+!!! example "Simplified Routing Table"
+
+    | Destination Network | Subnet Mask     | Next Hop      | Interface | Metric |
+    |---------------------|-----------------|---------------|-----------|--------|
+    | 192.168.1.0         | 255.255.255.0   | 0.0.0.0       | eth0      | 0      |
+    | 10.0.0.0            | 255.0.0.0       | 192.168.1.254 | eth0      | 10     |
+    | 0.0.0.0             | 0.0.0.0         | 192.168.1.1   | eth0      | 1      |
+
+!!! info "Routing Process"
+
+    When a router receives a packet:
+
+    1. Extract the destination IP address
+    2. Look for the longest matching prefix in the routing table
+    3. Forward the packet to the next hop or directly to the destination
+    4. If no match is found, send to the default gateway (if configured)
+
 #### Default gateways
+
+A **default gateway** is the node (typically a router) that serves as an access point to other networks when no specific route matches the destination.
+
+!!! note
+
+    - Default route is represented as 0.0.0.0/0 in routing tables
+    - It's used as a "last resort" when no more specific route exists
+    - In home/office networks, the default gateway connects the local network to the internet
+    - Without a default gateway, devices can only communicate within their local network
+
+!!! example
+
+    For a device with IP 192.168.1.100 and subnet mask 255.255.255.0:
+    
+    - Can directly reach addresses 192.168.1.1 through 192.168.1.254
+    - Must use default gateway (typically 192.168.1.1) to reach any other address
 
 #### Autonomous systems
 
+An **Autonomous System (AS)** is a collection of connected IP networks under the control of a single organization that presents a common routing policy to the internet.
+
+!!! info "AS Characteristics"
+
+    - Identified by a unique Autonomous System Number (ASN)
+    - Typically operated by ISPs or large organizations
+    - Interior routing occurs within an AS (using protocols like OSPF, EIGRP)
+    - Exterior routing occurs between different ASes (using BGP)
+    
+!!! example
+
+    - Google's AS number is AS15169
+    - Comcast uses AS7922
+    - Amazon Web Services uses multiple ASNs including AS16509
+
 #### Routing protocols: How routers learn paths (BGP, OSPF, etc.)
+
+Routing protocols enable routers to dynamically discover and share information about network topologies.
+
+!!! note "Interior vs. Exterior Protocols"
+
+    === "Interior Gateway Protocols (IGP)"
+    
+        Used within an autonomous system:
+        
+        - **OSPF (Open Shortest Path First)**: Link-state protocol that calculates shortest path first using Dijkstra's algorithm
+        - **IS-IS (Intermediate System to Intermediate System)**: Similar to OSPF, used in large service provider networks
+        - **RIP (Routing Information Protocol)**: Simple distance-vector protocol with hop count as metric (limited to 15 hops)
+        - **EIGRP (Enhanced Interior Gateway Routing Protocol)**: Cisco's advanced distance-vector protocol
+    
+    === "Exterior Gateway Protocols (EGP)"
+    
+        Used between autonomous systems:
+        
+        - **BGP (Border Gateway Protocol)**: The routing protocol of the internet, makes decisions based on paths, policies, and rule-sets rather than just metrics
+
+!!! info "Routing Protocol Selection Factors"
+
+    - Network size and complexity
+    - Convergence speed requirements
+    - Administrative boundaries
+    - Hardware capabilities
+    - Scalability needs
 
 ### Proxies & Intermediaries
 
+Network components that mediate connections between clients and servers.
+
 #### Forward proxies
+
+A **forward proxy** sits between client devices and the internet, forwarding client requests to web servers.
+
+!!! note "Forward Proxy Features"
+
+    - Client must be configured to use the proxy
+    - Can provide anonymity by hiding client's real IP address
+    - Enables access control, content filtering, and usage policies
+    - Can cache resources to improve performance
+
+!!! example "Common Forward Proxy Uses"
+
+    - Corporate networks restricting employee internet access
+    - Schools filtering inappropriate content
+    - Bypassing geo-restrictions (VPN services often function as proxies)
+    - Anonymizing web browsing
 
 #### Reverse proxies
 
+A **reverse proxy** sits in front of web servers and forwards client requests to appropriate backend servers.
+
+!!! note "Reverse Proxy Features"
+
+    - Client interacts with the proxy believing it's the actual server
+    - Distributes client requests across multiple servers
+    - Provides additional security by hiding backend server details
+    - Can handle SSL/TLS encryption/decryption (SSL termination)
+    - Enables caching and compression of responses
+
+!!! example "Common Reverse Proxy Uses"
+
+    - Load balancing across multiple application servers
+    - Web application firewalls
+    - Content caching
+    - Handling SSL/TLS termination
+
 #### Load balancers
+
+A **load balancer** distributes incoming network traffic across multiple servers to ensure high availability and reliability.
+
+!!! info "Load Balancing Methods"
+
+    - **Round Robin**: Requests distributed sequentially to each server
+    - **Least Connections**: Requests sent to server with fewest active connections
+    - **Least Response Time**: Requests sent to server with fastest response time
+    - **IP Hash**: Client IP determines which server receives the request (session persistence)
+    - **Weighted**: Servers assigned different weights based on capacity
+
+!!! example "Load Balancer Types"
+
+    - **Layer 4 (Transport)**: Decisions based on IP address and port
+    - **Layer 7 (Application)**: Content-aware, can route based on URL, HTTP headers, cookies
+    - **Hardware**: Purpose-built appliances (e.g., F5, Citrix)
+    - **Software**: Applications running on standard servers (e.g., NGINX, HAProxy)
+    - **Cloud-based**: Managed services (e.g., AWS ELB, Google Cloud Load Balancing)
 
 ### Firewalls & Network Security
 
+Network security devices that monitor and filter incoming and outgoing network traffic based on security rules.
+
 #### Traffic filtering
+
+Firewalls filter traffic based on predefined security rules to protect networks from unauthorized access and threats.
+
+!!! info "Firewall Filtering Criteria"
+
+    - Source and destination IP addresses
+    - Port numbers
+    - Protocol types (TCP, UDP, ICMP)
+    - Application-specific data (for advanced firewalls)
+    - Time of day
+    - User identity (in next-gen firewalls)
+
+!!! example "Firewall Types"
+
+    - **Packet Filtering Firewalls**: Basic firewalls examining packet headers
+    - **Circuit-Level Gateways**: Monitor TCP handshakes and sessions
+    - **Application-Level Gateways (Proxies)**: Inspect application-layer data
+    - **Stateful Inspection Firewalls**: Track the state of active connections
+    - **Next-Generation Firewalls (NGFW)**: Combine traditional firewall with additional functionality (IPS, deep packet inspection)
 
 #### Stateful vs stateless inspection
 
+The primary distinction between stateful and stateless firewalls is whether they track the state of active network connections.
+
+!!! note "Stateless Inspection"
+
+    - Examines each packet in isolation
+    - Uses static rules based on source/destination addresses and ports
+    - Doesn't keep track of connection state
+    - Faster but less secure
+    - Vulnerable to IP spoofing and certain attacks
+
+!!! note "Stateful Inspection"
+
+    - Tracks the state of active connections in a state table
+    - Understands the context of traffic based on previous packets
+    - Can determine if a packet is part of an existing connection
+    - More secure but requires more resources
+    - Can prevent many types of attacks by validating connection sequences
+
+!!! example "Stateful Firewall Operation"
+
+    1. Outbound request creates an entry in the state table
+    2. Inbound responses are checked against this table
+    3. Packets that match known connections are allowed
+    4. Packets claiming to be responses but without matching entries are blocked
+
 ## Performance Metrics
+
+Key measurements that help evaluate network performance and identify issues.
 
 ### Latency
 
 The time delay between a request being sent and the response being received, often measured in milliseconds.
+
+!!! note "Latency Components"
+
+    - **Propagation delay**: Time for signal to travel from source to destination (limited by speed of light)
+    - **Transmission delay**: Time to push all the packet's bits onto the link
+    - **Processing delay**: Time spent handling the packet inside devices
+    - **Queuing delay**: Time spent waiting in buffers for processing
 
 !!! example "Typical Values"
 
@@ -591,15 +821,37 @@ The time delay between a request being sent and the response being received, oft
     - **Medium latency**: 100-300ms
     - **High latency**: > 300ms
 
+!!! warning "Impact on Applications"
+
+    - **Web browsing**: Pages load slower with high latency
+    - **Real-time audio/video**: Noticeable delays in conversation
+    - **Online gaming**: Character/gameplay lag
+    - **Financial trading**: Missed opportunities with millisecond delays
+
 ### Throughput
 
 The amount of data that can be transferred from one point to another in a given time period.
+
+!!! info "Throughput vs. Bandwidth"
+
+    - **Bandwidth** is the theoretical capacity of the connection
+    - **Throughput** is the actual amount of data transferred
+    - Throughput is almost always lower than bandwidth due to protocol overhead, latency, network congestion, etc.
 
 !!! info "Common Units"
 
     - Kbps (Kilobits per second)
     - Mbps (Megabits per second)
     - Gbps (Gigabits per second)
+
+!!! tip "Factors Affecting Throughput"
+
+    - Network congestion
+    - Protocol overhead
+    - Device limitations
+    - Application design
+    - Distance and physical media
+    - TCP window size
 
 ### Bandwidth
 
@@ -611,9 +863,30 @@ The maximum data transfer rate of a network or internet connection.
     - **Business connections**: 100 Mbps to 10+ Gbps
     - **Data center connections**: Multiple 10/40/100 Gbps links
 
+!!! example "Bandwidth Requirements"
+
+    | Application | Typical Minimum Bandwidth |
+    |-------------|---------------------------|
+    | Web browsing | 1-5 Mbps |
+    | SD video streaming | 3-5 Mbps |
+    | HD video streaming | 5-10 Mbps |
+    | 4K video streaming | 25-50 Mbps |
+    | Video conferencing | 1-6 Mbps |
+    | Online gaming | 3-25 Mbps |
+    | File downloads | Varies with urgency |
+
 ### Packet Loss
 
 Percentage of packets that fail to reach their destination.
+
+!!! info "Causes of Packet Loss"
+
+    - Network congestion
+    - Hardware failures
+    - Software bugs
+    - Signal interference (wireless)
+    - Oversaturated network devices
+    - Security issues (firewall drops)
 
 !!! warning "Impact"
 
@@ -621,19 +894,160 @@ Percentage of packets that fail to reach their destination.
     - **1-2.5%**: Noticeable impact on real-time applications
     - **>3%**: Significant degradation in service quality
 
+!!! tip "Detecting Packet Loss"
+
+    ```bash
+    $ ping -c 100 example.com | grep -o -P '\d+(?=% packet loss)'
+    0
+    ```
+    
+    A value of 0 indicates no packet loss during the test.
+
 ### Jitter
 
 Variation in the delay of received packets.
+
+!!! info "Why Jitter Matters"
+
+    - Creates uneven delivery of real-time data
+    - Causes stuttering in voice/video
+    - Affects timing-sensitive applications
+    - Less important for web browsing, file transfers
 
 !!! info "Acceptable Values"
 
     - **<30ms**: Good for VoIP and video calling
     - **>30ms**: May cause quality issues in real-time communications
 
+!!! tip "Reducing Jitter Impact"
+
+    - Jitter buffers in real-time applications
+    - Quality of Service (QoS) configurations
+    - Consistent network paths
+    - Adequate bandwidth provision
+
 ## Network Troubleshooting
 
 ### Common diagnostic tools
 
+Network diagnostic tools help identify and resolve connectivity, performance, and configuration issues.
+
+!!! info "Essential Diagnostic Tools"
+
+    - **ping**: Tests basic connectivity and measures round-trip time
+    - **traceroute/tracert**: Displays the path packets take to a destination
+    - **nslookup/dig**: Queries DNS servers to resolve domain names
+    - **ipconfig/ifconfig**: Displays network interface configurations
+    - **netstat/ss**: Shows active network connections and listening ports
+    - **tcpdump/Wireshark**: Captures and analyzes network packets
+    - **nmap**: Network scanning and security auditing
+    - **curl/wget**: Tests HTTP/HTTPS connections and downloads
+    - **iperf**: Measures network performance (bandwidth, packet loss)
+    - **mtr**: Combines ping and traceroute for continuous monitoring
+
+!!! example "Using Diagnostic Tools"
+
+    === "Ping Example"
+    
+        ```bash
+        $ ping example.com
+        PING example.com (93.184.216.34): 56 data bytes
+        64 bytes from 93.184.216.34: icmp_seq=0 ttl=56 time=11.632 ms
+        64 bytes from 93.184.216.34: icmp_seq=1 ttl=56 time=11.726 ms
+        64 bytes from 93.184.216.34: icmp_seq=2 ttl=56 time=10.683 ms
+        ```
+        
+        Indicates: Successful connectivity with ~11ms latency
+    
+    === "Traceroute Example"
+    
+        ```bash
+        $ traceroute example.com
+        traceroute to example.com (93.184.216.34), 64 hops max
+        1  router.local (192.168.1.1)  1.170 ms  0.882 ms  0.798 ms
+        2  isp-gateway.net (203.0.113.1)  12.616 ms  14.714 ms  15.494 ms
+        3  isp-core-1.net (198.51.100.5)  15.746 ms  17.586 ms  16.003 ms
+        4  internet-backbone.net (198.51.100.25)  20.853 ms  17.538 ms  18.012 ms
+        5  example-edge.net (93.184.216.1)  19.125 ms  18.741 ms  18.294 ms
+        6  example.com (93.184.216.34)  22.333 ms  21.496 ms  21.146 ms
+        ```
+        
+        Indicates: The route takes 6 hops with potential bottleneck at hop 4
+
 ### Typical network issues
 
+Common network problems encountered in software development and system administration.
+
+!!! warning "Common Network Issues"
+
+    - **Connectivity failures**: Complete inability to reach a service or resource
+    - **High latency**: Excessive delays in data transmission
+    - **Packet loss**: Data packets never reaching their destination
+    - **DNS resolution problems**: Inability to convert domain names to IP addresses
+    - **Routing issues**: Inefficient or incorrect paths through the network
+    - **Firewall blockages**: Security configurations preventing legitimate traffic
+    - **MTU mismatches**: Packet fragmentation or black-holing
+    - **Bandwidth saturation**: Network congestion causing slowdowns
+    - **Authentication failures**: Issues with access credentials
+    - **Certificate errors**: Problems with TLS/SSL certificates or validation
+
+!!! example "Symptom-Cause Correlation"
+
+    | Symptom | Potential Causes | Initial Investigation |
+    |---------|------------------|----------------------|
+    | Can't reach website | DNS error, connectivity issue, server down | ping IP address, check DNS resolution |
+    | Intermittent connection | Packet loss, routing issues, interference | ping with flood option, check for pattern |
+    | Slow performance | Latency, bandwidth limitations, server overload | Run traceroute, check bandwidth usage |
+    | Connection timeouts | Firewall blocking, server not responding, misrouting | Check firewall logs, verify server status |
+
 ### Debugging approaches
+
+Systematic methods for identifying, isolating, and resolving network problems.
+
+!!! tip "Network Troubleshooting Methodology"
+
+    1. **Identify the problem**: Clearly define the issue and its symptoms
+    2. **Gather information**: Collect relevant data about the network environment
+    3. **Analyze the OSI layers systematically**: Start from physical layer and move up
+    4. **Isolate the issue**: Determine which component or segment is causing the problem
+    5. **Implement a solution**: Make necessary changes to resolve the issue
+    6. **Verify the fix**: Confirm the problem is resolved
+    7. **Document the solution**: Record the issue and resolution for future reference
+
+!!! note "OSI Layer Troubleshooting Approach"
+
+    === "Physical & Data Link (L1-L2)"
+    
+        - Check cables, connections, interface status
+        - Verify link lights, interface errors, duplex mismatches
+        - Commands: `ifconfig`/`ipconfig`, `ethtool`, check hardware
+    
+    === "Network & Transport (L3-L4)"
+    
+        - Verify IP configuration, routing, and connectivity
+        - Test basic connectivity and trace packet path
+        - Commands: `ping`, `traceroute`, `route`, `netstat`/`ss`
+    
+    === "Session & Above (L5-L7)"
+    
+        - Check application configuration, ports, and services
+        - Test specific services and application functionality
+        - Commands: `telnet`, `nslookup`/`dig`, `curl`, application logs
+
+!!! example "Divide and Conquer Approach"
+
+    For a web application connectivity issue:
+    
+    1. Can the client reach anything on the internet? (Test with `ping 8.8.8.8`)
+    2. Can the client resolve DNS? (Test with `nslookup example.com`)
+    3. Can the client reach the web server? (Test with `ping web-server-ip`)
+    4. Is the web server listening on the expected port? (Test with `telnet web-server-ip 80`)
+    5. Is there an application-specific error? (Check HTTP status codes, application logs)
+
+!!! tip "Advanced Debugging Techniques"
+
+    - **Packet Capture Analysis**: Use Wireshark/tcpdump to inspect actual packets
+    - **Network Baselining**: Compare current performance to established baselines
+    - **Configuration Comparison**: Compare working vs. non-working configurations
+    - **Control Environment Testing**: Test in a simplified environment to rule out variables
+    - **Log Correlation**: Analyze logs from multiple devices to identify patterns
