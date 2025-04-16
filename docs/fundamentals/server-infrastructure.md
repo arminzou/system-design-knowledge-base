@@ -135,11 +135,11 @@ A cloud computing model where cloud provider offers virtual infrastucture resour
     - Virtualized computing resources
     - Self-service provisioning
 
-!!! example "Examples"
+    !!! example
 
-    - AWS EC2
-    - Azure Virtual Machines
-    - Google Compute Engine
+        - AWS EC2
+        - Azure Virtual Machines
+        - Google Compute Engine
 
 #### PaaS (Platform as a Service)
 
@@ -153,11 +153,11 @@ A cloud computing model that provides a platform enviroment allowing customers t
     - Built-in scalability and high availability
     - Reduced operational management
 
-!!! example "Examples"
+    !!! example
 
-    - Azure App Service
-    - Google App Engine
-    - Heroku
+        - Azure App Service
+        - Google App Engine
+        - Heroku
 
 #### Serverless/FaaS (Function as a Service)
 
@@ -171,12 +171,12 @@ A cloud computing model that allows developers to build, deploy, and execute ind
     - Event-driven architecture
     - Stateless execution model
 
-!!! example "Examples"
+    !!! example
 
-    - AWS Lambda
-    - Azure Functions
-    - Google Cloud Functions
-    - Cloudflare Workers
+        - AWS Lambda
+        - Azure Functions
+        - Google Cloud Functions
+        - Cloudflare Workers
 
 #### SaaS (Software as a Service)
 
@@ -189,8 +189,8 @@ A computing model where cloud providers host, manage, and deliver applications t
     - Typically subscription-based pricing
     - Provider manages everything (infrastructure, platform, application)
 
-!!! example "Examples"
+    !!! example
 
-    - Microsoft 365
-    - Salesforce
-    - Google Workspace
+        - Microsoft 365
+        - Salesforce
+        - Google Workspace
